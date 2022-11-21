@@ -13,7 +13,8 @@
   "pkg": {
     "scripts": "build/**/*.js",
     "assets": [
-      "assets/**/*"
+      "assets/**/*",
+      "build/*.node"
     ],
     "targets": [
       "node14-linux",
