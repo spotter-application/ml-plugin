@@ -256,7 +256,7 @@ interface JSONData {
 }
 
 const DB_FILE_NAME = 'db.json';
-const DB_LAST_ACTIVE_WINDOWS_LIMIT = 10;
+const DB_LAST_ACTIVE_WINDOWS_LIMIT = 50;
 
 new class MLPlugin extends SpotterPlugin {
   private activeWindowsHistory: string[] = [];
@@ -276,7 +276,7 @@ new class MLPlugin extends SpotterPlugin {
 
       if (this.activeWindowsHistory.length >= DB_LAST_ACTIVE_WINDOWS_LIMIT) {
         this.activeWindowsHistory = [
-          ...this.activeWindowsHistory.slice(0, DB_LAST_ACTIVE_WINDOWS_LIMIT - 1),
+          ...this.activeWindowsHistory.slice(0, DB_LAST_ACTIVE_WINDOWS_LIMIT),
           windowInfo.title,
         ];
         return;
