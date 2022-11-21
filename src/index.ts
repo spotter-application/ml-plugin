@@ -312,10 +312,11 @@ new class MLPlugin extends SpotterPlugin {
   }
 
   public onQuery(query: string): Option[] {
+    console.log(query);
     if (query === '-ml') {
       const data = this.getData();
       return [{
-        name: 'Copy ML db data',
+        name: '-ml',
         action: async () => {
           ncp.writeSync(JSON.stringify(data));
           return true;
