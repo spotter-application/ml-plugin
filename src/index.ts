@@ -243,6 +243,8 @@ const activeWin = ActiveWindow.getActiveWindow();
 
 import { existsSync, writeFileSync, readFileSync } from 'fs';
 
+import ncp from 'node-clipboardy';
+
 interface MLDataItem {
   uptime: number;
   activeWindowsHistory: string[];
@@ -253,8 +255,7 @@ interface JSONData {
   data: MLDataItem[];
 }
 
-// TODO: change to just db.json
-const DB_FILE_NAME = '/home/denis/.config/spotter-ml-db.json';
+const DB_FILE_NAME = 'db.json';
 const DB_LAST_ACTIVE_WINDOWS_LIMIT = 10;
 
 new class MLPlugin extends SpotterPlugin {
@@ -283,7 +284,6 @@ new class MLPlugin extends SpotterPlugin {
 
       this.activeWindowsHistory.push(windowInfo.title);
     });
-		const data = this.getData();
 	}
 
   private appendData(dataItem: MLDataItem) {
@@ -309,6 +309,21 @@ new class MLPlugin extends SpotterPlugin {
   
   public onOpenSpotter(): void {
     console.log('open spotter!!!');
+  }
+
+  public onQuery(query: string): Option[] {
+    if (query.includes('ml')) {
+      const data = this.getData();
+      return [{
+        name: 'Copy ML db data',
+        action: async () => {
+          ncp.writeSync(JSON.stringify(data));
+          return true;
+        }
+      }]
+    }
+
+    return [];
   }
 
   public mlOnGlobalActionPath(actionPath: string): void {
