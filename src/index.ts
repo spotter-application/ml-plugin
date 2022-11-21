@@ -312,7 +312,7 @@ new class MLPlugin extends SpotterPlugin {
   }
 
   public onQuery(query: string): Option[] {
-    if (query.includes('ml')) {
+    if (query === '-ml') {
       const data = this.getData();
       return [{
         name: 'Copy ML db data',
